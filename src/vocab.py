@@ -288,6 +288,11 @@ class HAV:
         self._load_complexity()
         self._load_scaling()
         self._load_linguistics()
+        self._load_semantics()
+        self._load_philosophy_of_mind()
+        self._load_identity()
+        self._load_morphology()
+        self._load_motivation()
         self._load_mathematics()
 
     def _load_uncertainty(self):
@@ -1527,6 +1532,165 @@ class HAV:
             examples=["'I saw the man with the telescope' (who has the telescope?)", "'flying planes can be dangerous' (are planes dangerous, or is flying them dangerous?)", "agent: 'handle the obstacle' — which obstacle? how? ambiguity allows judgment"],
             bridges=["pragmatics", "context", "disambiguation", "communication"],
             tags=["linguistics", "challenge", "meaning"])
+
+    def _load_semantics(self):
+        ns = self.add_namespace("semantics",
+            "Meaning, reference, truth, and the relationship between symbols and the world")
+
+        ns.define("reference",
+            "The relationship between a symbol and the thing it points to in the world",
+            description="'Cat' refers to actual cats. 'The president' refers to a specific person. Reference is the arrow from word to world. In the fleet, A2A message payloads reference actual states, goals, and observations. But the reference must be grounded in shared experience — otherwise the symbol floats free of meaning.",
+            level=Level.DOMAIN,
+            examples=["'cat' refers to actual cats", "pointer refers to memory address", "A2A message payload refers to actual sensor state"],
+            bridges=["grounding-problem", "symbol", "meaning", "semantics"],
+            tags=["semantics", "reference", "meaning"])
+
+        ns.define("compositionality",
+            "Meaning of complex expressions determined by parts and combination rules",
+            description="[Already defined but bridges are key] The fleet relies on compositional communication: simple message types compose into complex protocols. A Request + Accept = agreement. A Warn + Command = urgent directive. Compositionality enables a small vocabulary to express infinite meanings.",
+            level=Level.DOMAIN,
+            examples=["'red ball' meaning from 'red' + 'ball' + combination rule", "programming: expressions composed from primitives", "A2A: simple intents combine into complex coordination"],
+            bridges=["productivity", "grammar", "meaning", "communication"],
+            tags=["semantics", "composition", "language"])
+
+        ns.define("truth-conditional",
+            "Meaning defined by the conditions under which a statement would be true",
+            description="'Snow is white' is true if and only if snow is white. The meaning of a statement IS its truth conditions. In the fleet: the meaning of 'obstacle at (3,5)' is the condition under which it would be verified (sensor reading matches coordinates). This grounds fleet statements in verifiable conditions.",
+            level=Level.DOMAIN,
+            examples=["'it is raining' is true iff rain is actually falling", "agent: 'path is blocked' is true iff sensor confirms obstacle", "SQL: WHERE clause defines truth conditions"],
+            bridges=["reference", "verification", "grounding", "logic"],
+            tags=["semantics", "truth", "logic"])
+
+    def _load_philosophy_of_mind(self):
+        ns = self.add_namespace("philosophy-of-mind",
+            "What is mind? What is consciousness? Can machines think?")
+
+        ns.define("functionalism",
+            "Mental states defined by their functional role, not their physical implementation",
+            description="Pain isn't C-fibers firing. Pain is whatever plays the 'pain role' — causes withdrawal, avoidance, distress reporting. A robot with the right functional organization could genuinely feel pain. This is the philosophical foundation of the fleet: agents aren't defined by their hardware (Jetson, cloud, FPGA) but by their functional organization (perceive, deliberate, act).",
+            level=Level.META,
+            examples=["pain defined by its causal role, not neural substrate", "fleet: agent defined by functional pipeline, not hardware", "multiple realizability: same function on different hardware"],
+            bridges=["embodiment", "consciousness", "identity", "abstraction"],
+            tags=["philosophy", "mind", "meta"])
+
+        ns.define("chinese-room",
+            "Following rules to manipulate symbols doesn't constitute understanding",
+            description="Searle's argument: a person in a room follows rules to manipulate Chinese characters, producing correct responses, without understanding Chinese. Critics: the whole room understands, or the simulation is sufficient. For the fleet: an agent that correctly processes A2A messages without understanding their meaning is a Chinese room. Grounding in shared experience is the proposed solution.",
+            level=Level.DOMAIN,
+            examples=["person following rules to answer Chinese questions without understanding Chinese", "agent processing sensor data without understanding what it means", "language model generating text without comprehension"],
+            bridges=["grounding-problem", "consciousness", "symbol", "understanding"],
+            tags=["philosophy", "ai", "understanding"])
+
+        ns.define("embodiment",
+            "Cognition requires a body interacting with a physical (or simulated) environment",
+            description="You can't learn to walk by reading about walking. Intelligence requires sensorimotor interaction with the world. The fleet embodies agents: they have sensors (cuda-sensor-agent), actuators (cuda-vessel-bridge), and must navigate real or simulated environments. Embodiment grounds their cognition in experience.",
+            level=Level.DOMAIN,
+            examples=["learning to walk requires a body", "robot learning from physical interaction, not simulation", "fleet agent learning from actual sensor readings, not descriptions of sensor readings"],
+            bridges=["functionalism", "grounding-problem", "perception", "action"],
+            tags=["philosophy", "cognition", "embodiment", "fleet"])
+
+        ns.define("extended-mind",
+            "Cognitive processes extend beyond the brain into the environment and tools",
+            description="Clark and Chalmers: your notebook is part of your memory. Your calculator is part of your cognition. The boundary of 'mind' includes tools and environment. For the fleet: cuda-memory-fabric extends agent memory beyond the agent to the fleet. The fleet mesh extends agent cognition to other agents. The agent's mind includes its tools, its peers, and its environment.",
+            level=Level.META,
+            examples=["notebook as external memory", "smartphone as extended cognition", "fleet: other agents are part of this agent's extended mind", "calculator as extended mathematical cognition"],
+            bridges=["memory", "tools", "environment", "cognition"],
+            tags=["philosophy", "cognition", "tools", "meta"])
+
+    def _load_identity(self):
+        ns = self.add_namespace("identity",
+            "Who is an agent? How do agents identify themselves and each other?")
+
+        ns.define("decentralized-identity",
+            "Self-sovereign identity that agents control without relying on a central authority",
+            description="No ID card issued by a government. No username from a platform. The agent controls its own identity through cryptographic keys. The fleet's cuda-did implements DID (Decentralized Identifier) documents with cryptographic verification. Each agent IS its own identity authority.",
+            level=Level.DOMAIN,
+            examples=["DID: did:cuda:agent-abc123", "agent proves identity by signing a challenge with its private key", "no central registry needed"],
+            bridges=["trust", "authentication", "sovereignty", "cryptographic-identity"],
+            tags=["identity", "did", "decentralized", "fleet"])
+
+        ns.define("provenance",
+            "The complete lineage of a decision or data artifact: where it came from and how it was transformed",
+            description="Where did this decision come from? What data informed it? Who was responsible? The fleet's cuda-provenance chains every decision to its inputs, creating an auditable trail. Like git blame for agent cognition: you can trace any output back through every transformation to its original inputs.",
+            level=Level.DOMAIN,
+            examples=["git blame: who wrote this line and why", "supply chain: where did this component come from", "agent: this decision was based on sensor reading X, deliberation round Y, with confidence Z"],
+            bridges=["audit-trail", "causal-chain", "accountability", "event-sourcing"],
+            tags=["identity", "audit", "traceability", "fleet"])
+
+        ns.define("attestation",
+            "A cryptographic claim about an agent's capabilities, verified by a trusted third party",
+            description="'This agent is certified for outdoor navigation' — signed by the fleet certification authority. Attestations let agents prove capabilities without demonstrating them every time. The fleet's cuda-did supports 6 attestation claim types. Like a driver's license for agent capabilities.",
+            level=Level.CONCRETE,
+            examples=["TLS certificate attests server identity", "driver license attests driving capability", "agent attestation: certified for level-3 navigation tasks"],
+            bridges=["decentralized-identity", "trust", "certification", "credential"],
+            tags=["identity", "credential", "trust", "fleet"])
+
+    def _load_morphology(self):
+        ns = self.add_namespace("morphology",
+            "Forms, structures, and patterns in space and thought")
+
+        ns.define("self-similarity",
+            "A pattern that contains copies of itself at every scale — fractals",
+            description="A coastline looks wiggly at 1km, 100m, and 1m scale. Branches look like smaller trees. The fleet's hierarchical structure is self-similar: agents contain sub-agents, sub-agents contain modules, modules contain functions. The same organizational pattern repeats at every level of granularity.",
+            level=Level.DOMAIN,
+            examples=["fractal coastline", "tree branches", "fleet: fleet -> agent -> module -> function -> instruction", "Russian dolls"],
+            bridges=["fractal", "hierarchy", "scale-invariance", "recursion"],
+            tags=["morphology", "pattern", "fractal"])
+
+        ns.define("fractal",
+            "A mathematical object with fractional dimension — infinitely detailed at every scale",
+            description="Mandelbrot set. Sierpinski triangle. Koch snowflake. Fractals emerge from simple iterative rules applied repeatedly. The fleet's tile structures (cuda-ghost-tiles) have fractal properties: attention tiles can be subdivided into sub-tiles, which can be subdivided again.",
+            level=Level.DOMAIN,
+            examples=["Mandelbrot set: infinite detail from z = z^2 + c", "Sierpinski triangle: remove middle triangle, repeat", "attention tiles: tile of tiles of tiles"],
+            bridges=["self-similarity", "iteration", "scale", "pattern"],
+            tags=["morphology", "mathematics", "fractal"])
+
+        ns.define("structural-coupling",
+            "Two systems that have co-evolved to fit together — their forms match",
+            description="Lock and key. Enzyme and substrate. USB plug and port. The fleet's cuda-equipment types (15 sensors, 12 actuators) define structural couplings: each sensor type has a specific data format, each actuator accepts specific commands. The coupling is structural — the interfaces fit together by design.",
+            level=Level.PATTERN,
+            examples=["lock and key", "enzyme and substrate fit", "USB-A plug and port", "fleet sensor type matches equipment registry interface"],
+            bridges=["interface", "compatibility", "co-evolution", "design"],
+            tags=["morphology", "design", "interface"])
+
+    def _load_motivation(self):
+        ns = self.add_namespace("motivation",
+            "What drives agents to act — goals, drives, and incentives")
+
+        ns.define("intrinsic-motivation",
+            "Doing something because it's inherently rewarding, not for external reward",
+            description="A child plays because play is fun. A programmer codes because coding is satisfying. The fleet's curiosity drive (cuda-adaptation) is intrinsically motivated: the agent explores not because it was told to, but because new information is inherently rewarding.",
+            level=Level.DOMAIN,
+            examples=["child playing", "artist creating for joy", "agent exploring unknown territory because novelty is rewarding"],
+            bridges=["extrinsic-motivation", "curiosity", "exploration", "reward"],
+            antonyms=["extrinsic-motivation"],
+            tags=["motivation", "psychology", "intrinsic"])
+
+        ns.define("extrinsic-motivation",
+            "Doing something for external reward or to avoid punishment",
+            description="Working for money. Studying for grades. The fleet's energy budget is an extrinsic motivator: the agent conserves energy because running out is bad. Reputation (cuda-social) is another extrinsic motivator: good reputation leads to better task assignments.",
+            level=Level.DOMAIN,
+            examples=["working for salary", "studying for grades", "agent conserving energy to avoid apoptosis", "agent building reputation for better task assignments"],
+            bridges=["intrinsic-motivation", "reward", "punishment", "incentive"],
+            antonyms=["intrinsic-motivation"],
+            tags=["motivation", "psychology", "extrinsic"])
+
+        ns.define("goal-hierarchy",
+            "Goals organized from abstract (survive) to concrete (turn left at next intersection)",
+            description="A goal pyramid: top-level goals decompose into sub-goals, which decompose into actions. 'Survive' -> 'Avoid obstacles' -> 'Detect obstacle ahead' -> 'Read sensor 3'. The fleet's cuda-goal implements hierarchical decomposition with dependency tracking and motivation levels.",
+            level=Level.PATTERN,
+            examples=["'stay healthy' -> 'exercise' -> 'go for a run' -> 'put on shoes'", "survive -> navigate -> detect obstacle -> read sensor", "build product -> design feature -> write code -> define function"],
+            bridges=["goal", "hierarchy", "decomposition", "subgoal"],
+            tags=["motivation", "hierarchy", "planning", "fleet"])
+
+        ns.define("drive-reduction",
+            "Motivation arises from the need to reduce an internal deficit",
+            description="You eat because you're hungry (calorie deficit). You sleep because you're tired (sleep deficit). The fleet's energy system implements drive reduction: low ATP creates a 'hunger' drive that motivates the agent to rest (generate ATP). Homeostasis is achieved when drives are satisfied.",
+            level=Level.DOMAIN,
+            examples=["eat to reduce hunger", "sleep to reduce fatigue", "agent rests to reduce ATP deficit", "drink to reduce thirst"],
+            bridges=["homeostasis", "energy-budget", "motivation", "setpoint"],
+            tags=["motivation", "biology", "drive", "fleet"])
+
     def _load_mathematics(self):
         ns = self.add_namespace("mathematics",
             "Mathematical structures and operations underlying agent cognition")
